@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useContext} from "react";
+import React, { FC, ReactElement, useContext } from "react";
 import {
   Box,
   Link,
@@ -13,8 +13,8 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import { routes } from "../routes";
 import { NavLink } from "react-router-dom";
-import {AppStoreContext} from "../App";
-import {observer} from "mobx-react-lite";
+import { AppStoreContext } from "../App";
+import { observer } from "mobx-react-lite";
 
 
 const Navbar: FC = (): ReactElement => {
@@ -41,25 +41,47 @@ const Navbar: FC = (): ReactElement => {
   };
 
   const renderAuthButton = () => {
+    const textStyleBigger = {
+      color: "black",
+      textDecoration: "none",
+      fontSize: "large",
+      marginRight: "1rem",
+    };
+
+    const textStyleSmaller = {
+      color: "black",
+      textDecoration: "none",
+      fontSize: "medium",
+      marginRight: "1rem",
+    };
+  
     if (!!appStore.authStore.token) {
       return (
-        <Link onClick={handleLogout} 
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ marginRight: "1rem" }}>
+            <p style={{ ...textStyleSmaller, textTransform: "capitalize" }}>
+              E-mail: {appStore.authStore.email}
+            </p>
+          </div>
+          <div style={{ marginRight: "1rem" }}>
+            <p style={textStyleSmaller}>Token: {appStore.authStore.token}</p>
+          </div>
+          <Link
+            onClick={handleLogout}
             key="registration-route"
             component={NavLink}
             to="/registration"
             variant="button"
             sx={{
-              color: "black",
-              textDecoration: "none",
-              fontSize: "large",
-              marginRight: "2rem",
+              ...textStyleBigger,
               "&:hover": {
                 color: "white",
-              }
+              },
             }}
           >
             Sign out
           </Link>
+        </div>
       );
     } else {
       return (
@@ -70,14 +92,11 @@ const Navbar: FC = (): ReactElement => {
             to="/registration"
             variant="button"
             sx={{
-              color: "black",
-              textDecoration: "none",
-              fontSize: "large",
-              marginRight: "2rem",
+              ...textStyleBigger,
+              "&.active": activeLinkStyles,
               "&:hover": {
                 color: "white",
               },
-              "&.active": activeLinkStyles,
             }}
           >
             Registration
@@ -88,22 +107,20 @@ const Navbar: FC = (): ReactElement => {
             to="/login"
             variant="button"
             sx={{
-              color: "black",
-              textDecoration: "none",
-              fontSize: "large",
-              marginRight: "2rem",
+              ...textStyleBigger,
+              "&.active": activeLinkStyles,
               "&:hover": {
                 color: "white",
               },
-              "&.active": activeLinkStyles,
             }}
           >
             Login
           </Link>
         </>
       );
-    }	
+    }
   };
+
 
   return (
     <Box
@@ -117,7 +134,7 @@ const Navbar: FC = (): ReactElement => {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
-            variant="h4"
+            variant="h5"
             noWrap
             sx={{
               mr: 2,
@@ -125,10 +142,10 @@ const Navbar: FC = (): ReactElement => {
             }}
           >
             {!!appStore.authStore.token ? (
-                <span
-                    style={{ color: 'green' }}>{`Token is: ${appStore.authStore.token}`}</span>
+              <span
+                style={{ color: 'green' }}>{`Token is: ${appStore.authStore.token}`}</span>
             ) : 'Homework 7'}
-            
+
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -160,7 +177,7 @@ const Navbar: FC = (): ReactElement => {
               }}
             >
               {routes.map((page) => (
-              !!page.enabled && <Link
+                !!page.enabled && <Link
                   key={page.key}
                   component={NavLink}
                   to={page.path}
@@ -184,8 +201,8 @@ const Navbar: FC = (): ReactElement => {
             sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
           >
             {!!appStore.authStore.token ? (
-                <span
-                    style={{ color: 'green' }}>{`Token is: ${appStore.authStore.token}`}</span>
+              <span
+                style={{ color: 'green' }}>{`Token is: ${appStore.authStore.token}`}</span>
             ) : 'Homework 7'}
           </Typography>
           <Box
