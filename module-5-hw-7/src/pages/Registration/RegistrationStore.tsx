@@ -6,7 +6,7 @@ import {
 } from "mobx";
 import AuthStore from "../../stores/AuthStore";
 
-class LoginStore {
+class RegistrationStore {
 
     private authStore: AuthStore;
 
@@ -34,10 +34,10 @@ class LoginStore {
         }
     }
 
-    async login() {
+    async registration() {
         try {
             this.isLoading = true;
-           await this.authStore.login(this.email, this.password);
+           await this.authStore.registration(this.email, this.password);
         }
         catch (e) {
             if (e instanceof Error) {
@@ -48,4 +48,4 @@ class LoginStore {
     }
 }
 
-export default LoginStore;
+export default RegistrationStore;

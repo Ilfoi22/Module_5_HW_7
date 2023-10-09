@@ -1,12 +1,12 @@
 import React, {useContext} from 'react'
 import {Box, Button, CircularProgress, TextField, Typography} from '@mui/material'
-import LoginStore from "./LoginStore";
+import RegistrationStore from "./RegistrationStore";
 import {AppStoreContext} from "../../App";
 import {observer} from "mobx-react-lite";
 
-const Login = () => {
+const Registration = () => {
     const appStore = useContext(AppStoreContext);
-    const store = new LoginStore(appStore.authStore);
+    const store = new RegistrationStore(appStore.authStore);
 
     return (
         <Box
@@ -18,13 +18,13 @@ const Login = () => {
             }}
         >
             <Typography component="h1" variant="h5">
-                Login
+                Registration
             </Typography>
             <Box component="form"
                  onSubmit={async (event) =>
                  {
                      event.preventDefault()
-                     await store.login()
+                     await store.registration()
                  }}
                  noValidate sx={{ mt: 1 }}>
                 <TextField
@@ -72,4 +72,4 @@ const Login = () => {
     )
 }
 
-export default observer(Login)
+export default observer(Registration)

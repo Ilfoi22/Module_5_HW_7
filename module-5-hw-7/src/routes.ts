@@ -2,6 +2,7 @@
 import User from "./pages/User/User";
 import Resource from "./pages/Resource/Resource";
 import CreateUser from "./pages/CreateUser/CreateUser";
+import Registration from "./pages/Registration/Registration";
 import Login from "./pages/Login/Login";
 
 // other
@@ -39,10 +40,17 @@ export const routes: Array<Route> = [
         component: CreateUser
     },
     {
+        key: 'registration-route',
+        title: 'Registration',
+        path: '/registration',
+        enabled: false,
+        component: Registration
+    },
+    {
         key: 'login-route',
         title: 'Login',
         path: '/login',
-        enabled: true,
+        enabled: false,
         component: Login
     }
 ]

@@ -8,6 +8,7 @@ import {
   MenuItem,
   Toolbar,
   Typography,
+  Button
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { routes } from "../routes";
@@ -35,6 +36,75 @@ const Navbar: FC = (): ReactElement => {
     borderBottom: "2px solid white",
   };
 
+  const handleLogout = () => {
+    appStore.authStore.logout();
+  };
+
+  const renderAuthButton = () => {
+    if (!!appStore.authStore.token) {
+      return (
+        <Link onClick={handleLogout} 
+            key="registration-route"
+            component={NavLink}
+            to="/registration"
+            variant="button"
+            sx={{
+              color: "black",
+              textDecoration: "none",
+              fontSize: "large",
+              marginRight: "2rem",
+              "&:hover": {
+                color: "white",
+              }
+            }}
+          >
+            Sign out
+          </Link>
+      );
+    } else {
+      return (
+        <>
+          <Link
+            key="registration-route"
+            component={NavLink}
+            to="/registration"
+            variant="button"
+            sx={{
+              color: "black",
+              textDecoration: "none",
+              fontSize: "large",
+              marginRight: "2rem",
+              "&:hover": {
+                color: "white",
+              },
+              "&.active": activeLinkStyles,
+            }}
+          >
+            Registration
+          </Link>
+          <Link
+            key="login-route"
+            component={NavLink}
+            to="/login"
+            variant="button"
+            sx={{
+              color: "black",
+              textDecoration: "none",
+              fontSize: "large",
+              marginRight: "2rem",
+              "&:hover": {
+                color: "white",
+              },
+              "&.active": activeLinkStyles,
+            }}
+          >
+            Login
+          </Link>
+        </>
+      );
+    }	
+  };
+
   return (
     <Box
       sx={{
@@ -58,6 +128,7 @@ const Navbar: FC = (): ReactElement => {
                 <span
                     style={{ color: 'green' }}>{`Token is: ${appStore.authStore.token}`}</span>
             ) : 'Homework 7'}
+            
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -98,7 +169,9 @@ const Navbar: FC = (): ReactElement => {
                   variant="button"
                 >
                   <MenuItem onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page.title}</Typography>
+                    <Typography textAlign="center">
+                      {page.title}
+                    </Typography>
                   </MenuItem>
                 </Link>
               ))}
@@ -113,41 +186,40 @@ const Navbar: FC = (): ReactElement => {
             {!!appStore.authStore.token ? (
                 <span
                     style={{ color: 'green' }}>{`Token is: ${appStore.authStore.token}`}</span>
-            ) : 'A-LEVEL CURSE'}
+            ) : 'Homework 7'}
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "flex-start",
-                alignItems: "center",
-                marginLeft: "1rem",
-              }}
-            >
-              {routes.map((page) => (
-               !!page.enabled && <Link
-               key={page.key}
-               component={NavLink}
-               to={page.path}
-               variant="button"
-               sx={{
-                 color: "black",
-                 textDecoration: "none",
-                 fontSize: "large",
-                 marginLeft: "2rem",
-                 "&:hover": {
-                   color: "white",
-                 },
-                 "&.active": activeLinkStyles,
-               }}
-              >
-               {page.title}
-             </Link>
-             
-              ))}
-            </Box>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            {routes.map((page) => (
+              !!page.enabled && (
+                <Link
+                  key={page.key}
+                  component={NavLink}
+                  to={page.path}
+                  variant="button"
+                  sx={{
+                    color: "black",
+                    textDecoration: "none",
+                    fontSize: "large",
+                    marginLeft: "2rem",
+                    "&:hover": {
+                      color: "white",
+                    },
+                    "&.active": activeLinkStyles,
+                  }}
+                >
+                  {page.title}
+                </Link>
+              )
+            ))}
           </Box>
+          {renderAuthButton()}
         </Toolbar>
       </Container>
     </Box>

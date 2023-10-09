@@ -12,6 +12,15 @@ class AuthStore {
         const result = await authApi.login({email, password});
         this.token = result.token;
     }
+
+    async registration(email: string, password: string) {
+        const result = await authApi.login({email, password});
+        this.token = result.token;
+    }
+
+    async logout() {
+        this.token = "";
+    }
 }
 
 export default AuthStore;
