@@ -59,7 +59,7 @@ const Navbar: FC = (): ReactElement => {
       return (
         <div style={{ display: "flex", alignItems: "center" }}>
           <div style={{ marginRight: "1rem" }}>
-            <p style={{ ...textStyleSmaller, textTransform: "capitalize" }}>
+            <p style={{ ...textStyleSmaller}}>
               E-mail: {appStore.authStore.email}
             </p>
           </div>
@@ -107,6 +107,7 @@ const Navbar: FC = (): ReactElement => {
             to="/login"
             variant="button"
             sx={{
+              marginLeft: "2rem",
               ...textStyleBigger,
               "&.active": activeLinkStyles,
               "&:hover": {

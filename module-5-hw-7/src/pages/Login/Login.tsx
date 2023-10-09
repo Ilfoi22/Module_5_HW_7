@@ -57,6 +57,9 @@ const Login = () => {
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
+                    onClick={async () => {
+                        await store.login();
+                    }}
                 >
                     {store.isLoading ? (
                         <CircularProgress />

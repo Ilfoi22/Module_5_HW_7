@@ -38,6 +38,7 @@ class LoginStore {
         try {
             this.isLoading = true;
            await this.authStore.login(this.email, this.password);
+           this.authStore.isLogined = true;
         }
         catch (e) {
             if (e instanceof Error) {

@@ -1,13 +1,16 @@
-import React, { FC, ReactNode } from "react";
+import React, { FC, ReactNode, useContext } from "react";
 import { Box, CssBaseline } from "@mui/material";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import { AppStoreContext } from "../App";
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 const Layout: FC<LayoutProps> = ({ children }) => {
+  const appStore = useContext(AppStoreContext);
+  
   return (
     <>
       <CssBaseline />
@@ -15,7 +18,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          justifyContent: "flex-start",
+          justifyContent: "space-between", 
           minHeight: "100vh",
           maxWidth: "100vw",
           flexGrow: 1,

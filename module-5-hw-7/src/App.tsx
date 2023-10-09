@@ -1,14 +1,14 @@
-import React, {createContext, useState} from "react";
+import React, { createContext, useState } from "react";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { routes as appRoutes } from "./routes";
 import Layout from "./components/Layout";
 import AuthStore from "./stores/AuthStore";
-import {IAppStore} from "./interfaces/appStore";
+import { IAppStore } from "./interfaces/appStore";
 
 const store: IAppStore = {
-  'authStore':  new AuthStore()
+  'authStore': new AuthStore()
 }
 export const AppStoreContext = createContext(store);
 

@@ -38,6 +38,7 @@ class RegistrationStore {
         try {
             this.isLoading = true;
            await this.authStore.registration(this.email, this.password);
+           this.authStore.isLogined = true;
         }
         catch (e) {
             if (e instanceof Error) {
