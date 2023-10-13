@@ -142,11 +142,7 @@ const Navbar: FC = (): ReactElement => {
               display: { xs: "none", md: "flex" },
             }}
           >
-            {!!appStore.authStore.token ? (
-              <span
-                style={{ color: 'green' }}>{`Token is: ${appStore.authStore.token}`}</span>
-            ) : 'Homework 7'}
-
+            Homework 7
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton

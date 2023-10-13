@@ -6,7 +6,6 @@ import {
     Typography,
   } from "@mui/material";
   import { FC, ReactElement } from "react";
-  import { useNavigate } from "react-router-dom";
   import { IResource } from "../../interfaces/resources";
   
   export const ResourceCard: FC<IResource> = (props): ReactElement => {

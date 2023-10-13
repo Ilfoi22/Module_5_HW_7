@@ -1,70 +1,107 @@
-import React, { ReactElement, FC, useEffect, useState } from "react";
+import React, { ReactElement, FC, useEffect, useState, useContext } from 'react';
 import {
   Box,
   Card,
   CardContent,
-  CardMedia,
-  CircularProgress,
-  Container,
-  Grid,
-  Pagination,
   Typography,
-} from "@mui/material";
-import * as userApi from "../../api/modules/users";
-import { IUser } from "../../interfaces/users";
-import { useParams } from "react-router-dom";
-import UserForm from "../../components/UserForm";
+  TextField,
+  Button,
+  Container
+} from '@mui/material';
+import { AppStoreContext } from "../../App";
 
-const CreateUser: FC<any> = (): ReactElement => {
-  const [user, setUser] = useState<IUser | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { id } = useParams();
+const CreateUser: React.FC = () => {
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [isRegistered, setIsRegistered] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (id) {
-      const getUser = async () => {
-        try {
-          setIsLoading(true);
-          const res = await userApi.getById(id);
-          setUser(res.data);
-        } catch (e) {
-          if (e instanceof Error) {
-            console.error(e.message);
-          }
-        }
-        setIsLoading(false);
-      };
-      getUser();
+  const { authStore } = useContext(AppStoreContext);
+  
+  const handleRegistration = () => {
+    if (!firstName || !lastName || !email) {
+      setError('All fields must be filled.');
+      return;
     }
-  }, [id]);
+
+    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]/;
+    if (!emailRegex.test(email)) {
+      setError('Invalid email format. Must look like example@com');
+      return;
+    }
+
+    setIsRegistered(true);
+    setError(null);
+  };
+
+  if (!authStore.isLogined) {
+    return (
+      <p
+        style={{
+          fontSize: "24px",
+          textAlign: "center",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        You need to Log In or Sign Up to view this page.
+      </p>
+    );
+  }
 
   return (
-    <Container>
-      <Grid container spacing={4} justifyContent="center" m={4}>
-        {isLoading ? (
-          <CircularProgress />
-        ) : (
-          <>
-            <Card sx={{ maxWidth: 250 }}>
-              <CardMedia
-                component="img"
-                height="250"
-                image={user?.avatar}
-                alt={user?.email}
+    <Container maxWidth="md">
+      <Card style={{ margin: '20px', textAlign: 'center' }}>
+        <CardContent style={{ padding: '20px' }}>
+          <Typography variant="h4">Create User Form</Typography>
+          <form>
+            <Box display="flex" padding={2} flexDirection="column" gap={2}>
+              <TextField
+                label="Lastname"
+                variant="outlined"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
               />
-              <CardContent>
-                <Typography noWrap gutterBottom variant="h6" component="div">
-                  {user?.email}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {user?.first_name} {user?.last_name}
-                </Typography>
-              </CardContent>
-            </Card>
-            {user && <UserForm {...user}></UserForm>}
-          </>
-        )}
-      </Grid>
+              <TextField
+                label="Name"
+                variant="outlined"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+              <TextField
+                label="Email"
+                type="email"
+                variant="outlined"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleRegistration}
+                style={{ marginTop: '20px' }}
+              >
+                Submit
+              </Button>
+            </Box>
+          </form>
+
+          {error && (
+            <Typography variant="body1" color="error">
+              {error}
+            </Typography>
+          )}
+
+          {isRegistered && (
+            <Typography variant="body1">
+              User {lastName} {firstName}has been created.
+            </Typography>
+          )}
+        </CardContent>
+      </Card>
     </Container>
   );
 };

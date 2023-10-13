@@ -34,9 +34,9 @@ export const routes: Array<Route> = [
     },
     {
         key: 'create-user-route',
-        title: '',
-        path: '/user/:id',
-        enabled: false,
+        title: 'CreateUser',
+        path: '/create-user',
+        enabled: true,
         component: CreateUser
     },
     {
